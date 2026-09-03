@@ -1126,6 +1126,39 @@ h3{color:#ffffff;
   grid-template-rows: 38vh 38vh;
   gap: 4px;
 }
+
+/* ── MOBILE: project detail sections (pattern-based, applies to current & future sections) ── */
+@media (max-width: 768px) {
+  /* dense inline image grids collapse to fewer columns */
+  [style*="grid-template-columns:repeat(5,1fr)"] { grid-template-columns: repeat(3, 1fr) !important; }
+  [style*="grid-template-columns:repeat(4,1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* set-per-row stories/linkedin (Homanan) → ~3 per row, larger */
+  [style*="width:15%"] { width: 31% !important; }
+  [style*="width:18%"] { width: 31% !important; }
+
+  /* oversized fixed gaps shrink on small screens */
+  [style*="gap:120px"] { gap: 24px !important; }
+  [style*="gap:28px"]  { gap: 16px !important; }
+
+  /* project hero titles fit the viewport */
+  .project-hero-content h1 { font-size: 15vw !important; }
+
+  /* next-project banner: stack text above image */
+  a[style*="min-height:420px"] { flex-direction: column !important; min-height: auto !important; }
+  a[style*="min-height:420px"] > div[style*="flex:0 0 45%"] { flex: 1 1 auto !important; padding: 3em 6vw !important; }
+  a[style*="min-height:420px"] > div[style*="flex:1"] { width: 100% !important; min-height: 55vw !important; }
+  a[style*="min-height:420px"] h2 { font-size: 4em !important; }
+}
+@media (max-width: 479px) {
+  /* on phones, three-up image grids become two-up */
+  [style*="grid-template-columns:repeat(3,1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+  [style*="grid-template-columns:repeat(5,1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* set-per-row stories/linkedin → 2 per row */
+  [style*="width:15%"] { width: 47% !important; }
+  [style*="width:18%"] { width: 47% !important; }
+}
 </style>
 </head>
 <body>
