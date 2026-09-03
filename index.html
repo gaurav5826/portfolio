@@ -1127,13 +1127,26 @@ h3{color:#ffffff;
   gap: 4px;
 }
 
-/* ── MOBILE: project detail sections (pattern-based, applies to current & future sections) ── */
+/* ── MOBILE: project detail sections (content-aware, pattern-based; applies to current & future sections) ── */
 @media (max-width: 768px) {
-  /* dense inline image grids collapse to fewer columns */
+  /* Portrait/square image grids: keep them multi-column but cap density so nothing
+     becomes a sliver. 5-up -> 3-up (15 items stays even), 4-up -> 2-up. 3-up and 2-up
+     are LEFT as-is (3 cols of 9:16/4:5/1:1 read fine on phones and avoid odd orphans). */
   [style*="grid-template-columns:repeat(5,1fr)"] { grid-template-columns: repeat(3, 1fr) !important; }
   [style*="grid-template-columns:repeat(4,1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
 
-  /* set-per-row stories/linkedin (Homanan) → ~3 per row, larger */
+  /* LANDSCAPE / banner grids: detect by child aspect-ratio and drop to a single
+     full-width column so wide images stay legible instead of thin strips. */
+  div:has(> div[style*="aspect-ratio:1904/924"]),
+  div:has(> div[style*="aspect-ratio:1500/600"]),
+  div:has(> div[style*="aspect-ratio:3/1"]) { grid-template-columns: 1fr !important; }
+
+  /* Template editorial grids (Mrunalini shots / sale creatives etc.) */
+  .editorial-grid { grid-template-columns: repeat(2, 1fr) !important; grid-template-rows: auto !important; }
+  .editorial-img.tall { grid-column: auto !important; grid-row: auto !important; }
+  .editorial-img { min-height: 40vw; }
+
+  /* set-per-row stories/linkedin (Homanan) → ~3 per row */
   [style*="width:15%"] { width: 31% !important; }
   [style*="width:18%"] { width: 31% !important; }
 
@@ -1141,23 +1154,22 @@ h3{color:#ffffff;
   [style*="gap:120px"] { gap: 24px !important; }
   [style*="gap:28px"]  { gap: 16px !important; }
 
-  /* project hero titles fit the viewport */
-  .project-hero-content h1 { font-size: 15vw !important; }
+  /* Fluid headings so text never overflows the viewport */
+  .project-hero-content h1 { font-size: clamp(2.4rem, 13vw, 8em) !important; }
 
   /* next-project banner: stack text above image */
   a[style*="min-height:420px"] { flex-direction: column !important; min-height: auto !important; }
   a[style*="min-height:420px"] > div[style*="flex:0 0 45%"] { flex: 1 1 auto !important; padding: 3em 6vw !important; }
   a[style*="min-height:420px"] > div[style*="flex:1"] { width: 100% !important; min-height: 55vw !important; }
-  a[style*="min-height:420px"] h2 { font-size: 4em !important; }
+  a[style*="min-height:420px"] h2 { font-size: clamp(2rem, 10vw, 4em) !important; }
 }
 @media (max-width: 479px) {
-  /* on phones, three-up image grids become two-up */
-  [style*="grid-template-columns:repeat(3,1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
-  [style*="grid-template-columns:repeat(5,1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
-
-  /* set-per-row stories/linkedin → 2 per row */
-  [style*="width:15%"] { width: 47% !important; }
-  [style*="width:18%"] { width: 47% !important; }
+  /* On small phones keep 3-up portrait grids (avoids the 9→"4×2+1" orphan);
+     only the densest 5-up steps down to 3-up. */
+  [style*="grid-template-columns:repeat(5,1fr)"] { grid-template-columns: repeat(3, 1fr) !important; }
+  /* keep set-per-row stories/linkedin at ~3 per row */
+  [style*="width:15%"] { width: 31% !important; }
+  [style*="width:18%"] { width: 31% !important; }
 }
 </style>
 </head>
